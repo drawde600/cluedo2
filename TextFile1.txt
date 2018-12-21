@@ -1,0 +1,547 @@
+﻿Backup Game.cs
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace ConsoleApplication1
+{
+    class Game
+    {
+        public Players Players { get; set; }
+        public Card[] hiddenCards { get; set; }
+
+
+        Card[][] possibles = new Card[][]
+        {
+            new Card[3] {new Card((int)Card.SuspectID.ColonelMustard), new Card((int)Card.WeaponID.Candlestick), new Card((int)Card.RoomID.Kitchen)},
+            new Card[3] {new Card((int)Card.SuspectID.ColonelMustard), new Card((int)Card.WeaponID.Candlestick), new Card((int)Card.RoomID.Ballroom)},
+            new Card[3] {new Card((int)Card.SuspectID.ColonelMustard), new Card((int)Card.WeaponID.Candlestick), new Card((int)Card.RoomID.Conservatory)},
+            new Card[3] {new Card((int)Card.SuspectID.ColonelMustard), new Card((int)Card.WeaponID.Candlestick), new Card((int)Card.RoomID.DiningRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.ColonelMustard), new Card((int)Card.WeaponID.Candlestick), new Card((int)Card.RoomID.BilliardRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.ColonelMustard), new Card((int)Card.WeaponID.Candlestick), new Card((int)Card.RoomID.Library)},
+            new Card[3] {new Card((int)Card.SuspectID.ColonelMustard), new Card((int)Card.WeaponID.Candlestick), new Card((int)Card.RoomID.Lounge)},
+            new Card[3] {new Card((int)Card.SuspectID.ColonelMustard), new Card((int)Card.WeaponID.Candlestick), new Card((int)Card.RoomID.Hall)},
+            new Card[3] {new Card((int)Card.SuspectID.ColonelMustard), new Card((int)Card.WeaponID.Candlestick), new Card((int)Card.RoomID.Study)},
+            new Card[3] {new Card((int)Card.SuspectID.ColonelMustard), new Card((int)Card.WeaponID.Knife), new Card((int)Card.RoomID.Kitchen)},
+            new Card[3] {new Card((int)Card.SuspectID.ColonelMustard), new Card((int)Card.WeaponID.Knife), new Card((int)Card.RoomID.Ballroom)},
+            new Card[3] {new Card((int)Card.SuspectID.ColonelMustard), new Card((int)Card.WeaponID.Knife), new Card((int)Card.RoomID.Conservatory)},
+            new Card[3] {new Card((int)Card.SuspectID.ColonelMustard), new Card((int)Card.WeaponID.Knife), new Card((int)Card.RoomID.DiningRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.ColonelMustard), new Card((int)Card.WeaponID.Knife), new Card((int)Card.RoomID.BilliardRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.ColonelMustard), new Card((int)Card.WeaponID.Knife), new Card((int)Card.RoomID.Library)},
+            new Card[3] {new Card((int)Card.SuspectID.ColonelMustard), new Card((int)Card.WeaponID.Knife), new Card((int)Card.RoomID.Lounge)},
+            new Card[3] {new Card((int)Card.SuspectID.ColonelMustard), new Card((int)Card.WeaponID.Knife), new Card((int)Card.RoomID.Hall)},
+            new Card[3] {new Card((int)Card.SuspectID.ColonelMustard), new Card((int)Card.WeaponID.Knife), new Card((int)Card.RoomID.Study)},
+            new Card[3] {new Card((int)Card.SuspectID.ColonelMustard), new Card((int)Card.WeaponID.LeadPipe), new Card((int)Card.RoomID.Kitchen)},
+            new Card[3] {new Card((int)Card.SuspectID.ColonelMustard), new Card((int)Card.WeaponID.LeadPipe), new Card((int)Card.RoomID.Ballroom)},
+            new Card[3] {new Card((int)Card.SuspectID.ColonelMustard), new Card((int)Card.WeaponID.LeadPipe), new Card((int)Card.RoomID.Conservatory)},
+            new Card[3] {new Card((int)Card.SuspectID.ColonelMustard), new Card((int)Card.WeaponID.LeadPipe), new Card((int)Card.RoomID.DiningRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.ColonelMustard), new Card((int)Card.WeaponID.LeadPipe), new Card((int)Card.RoomID.BilliardRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.ColonelMustard), new Card((int)Card.WeaponID.LeadPipe), new Card((int)Card.RoomID.Library)},
+            new Card[3] {new Card((int)Card.SuspectID.ColonelMustard), new Card((int)Card.WeaponID.LeadPipe), new Card((int)Card.RoomID.Lounge)},
+            new Card[3] {new Card((int)Card.SuspectID.ColonelMustard), new Card((int)Card.WeaponID.LeadPipe), new Card((int)Card.RoomID.Hall)},
+            new Card[3] {new Card((int)Card.SuspectID.ColonelMustard), new Card((int)Card.WeaponID.LeadPipe), new Card((int)Card.RoomID.Study)},
+            new Card[3] {new Card((int)Card.SuspectID.ColonelMustard), new Card((int)Card.WeaponID.Rope), new Card((int)Card.RoomID.Kitchen)},
+            new Card[3] {new Card((int)Card.SuspectID.ColonelMustard), new Card((int)Card.WeaponID.Rope), new Card((int)Card.RoomID.Ballroom)},
+            new Card[3] {new Card((int)Card.SuspectID.ColonelMustard), new Card((int)Card.WeaponID.Rope), new Card((int)Card.RoomID.Conservatory)},
+            new Card[3] {new Card((int)Card.SuspectID.ColonelMustard), new Card((int)Card.WeaponID.Rope), new Card((int)Card.RoomID.DiningRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.ColonelMustard), new Card((int)Card.WeaponID.Rope), new Card((int)Card.RoomID.BilliardRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.ColonelMustard), new Card((int)Card.WeaponID.Rope), new Card((int)Card.RoomID.Library)},
+            new Card[3] {new Card((int)Card.SuspectID.ColonelMustard), new Card((int)Card.WeaponID.Rope), new Card((int)Card.RoomID.Lounge)},
+            new Card[3] {new Card((int)Card.SuspectID.ColonelMustard), new Card((int)Card.WeaponID.Rope), new Card((int)Card.RoomID.Hall)},
+            new Card[3] {new Card((int)Card.SuspectID.ColonelMustard), new Card((int)Card.WeaponID.Rope), new Card((int)Card.RoomID.Study)},
+            new Card[3] {new Card((int)Card.SuspectID.ColonelMustard), new Card((int)Card.WeaponID.Revolver), new Card((int)Card.RoomID.Kitchen)},
+            new Card[3] {new Card((int)Card.SuspectID.ColonelMustard), new Card((int)Card.WeaponID.Revolver), new Card((int)Card.RoomID.Ballroom)},
+            new Card[3] {new Card((int)Card.SuspectID.ColonelMustard), new Card((int)Card.WeaponID.Revolver), new Card((int)Card.RoomID.Conservatory)},
+            new Card[3] {new Card((int)Card.SuspectID.ColonelMustard), new Card((int)Card.WeaponID.Revolver), new Card((int)Card.RoomID.DiningRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.ColonelMustard), new Card((int)Card.WeaponID.Revolver), new Card((int)Card.RoomID.BilliardRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.ColonelMustard), new Card((int)Card.WeaponID.Revolver), new Card((int)Card.RoomID.Library)},
+            new Card[3] {new Card((int)Card.SuspectID.ColonelMustard), new Card((int)Card.WeaponID.Revolver), new Card((int)Card.RoomID.Lounge)},
+            new Card[3] {new Card((int)Card.SuspectID.ColonelMustard), new Card((int)Card.WeaponID.Revolver), new Card((int)Card.RoomID.Hall)},
+            new Card[3] {new Card((int)Card.SuspectID.ColonelMustard), new Card((int)Card.WeaponID.Revolver), new Card((int)Card.RoomID.Study)},
+            new Card[3] {new Card((int)Card.SuspectID.ColonelMustard), new Card((int)Card.WeaponID.Wrench), new Card((int)Card.RoomID.Kitchen)},
+            new Card[3] {new Card((int)Card.SuspectID.ColonelMustard), new Card((int)Card.WeaponID.Wrench), new Card((int)Card.RoomID.Ballroom)},
+            new Card[3] {new Card((int)Card.SuspectID.ColonelMustard), new Card((int)Card.WeaponID.Wrench), new Card((int)Card.RoomID.Conservatory)},
+            new Card[3] {new Card((int)Card.SuspectID.ColonelMustard), new Card((int)Card.WeaponID.Wrench), new Card((int)Card.RoomID.DiningRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.ColonelMustard), new Card((int)Card.WeaponID.Wrench), new Card((int)Card.RoomID.BilliardRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.ColonelMustard), new Card((int)Card.WeaponID.Wrench), new Card((int)Card.RoomID.Library)},
+            new Card[3] {new Card((int)Card.SuspectID.ColonelMustard), new Card((int)Card.WeaponID.Wrench), new Card((int)Card.RoomID.Lounge)},
+            new Card[3] {new Card((int)Card.SuspectID.ColonelMustard), new Card((int)Card.WeaponID.Wrench), new Card((int)Card.RoomID.Hall)},
+            new Card[3] {new Card((int)Card.SuspectID.ColonelMustard), new Card((int)Card.WeaponID.Wrench), new Card((int)Card.RoomID.Study)},
+            new Card[3] {new Card((int)Card.SuspectID.MissScarlet), new Card((int)Card.WeaponID.Candlestick), new Card((int)Card.RoomID.Kitchen)},
+            new Card[3] {new Card((int)Card.SuspectID.MissScarlet), new Card((int)Card.WeaponID.Candlestick), new Card((int)Card.RoomID.Ballroom)},
+            new Card[3] {new Card((int)Card.SuspectID.MissScarlet), new Card((int)Card.WeaponID.Candlestick), new Card((int)Card.RoomID.Conservatory)},
+            new Card[3] {new Card((int)Card.SuspectID.MissScarlet), new Card((int)Card.WeaponID.Candlestick), new Card((int)Card.RoomID.DiningRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.MissScarlet), new Card((int)Card.WeaponID.Candlestick), new Card((int)Card.RoomID.BilliardRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.MissScarlet), new Card((int)Card.WeaponID.Candlestick), new Card((int)Card.RoomID.Library)},
+            new Card[3] {new Card((int)Card.SuspectID.MissScarlet), new Card((int)Card.WeaponID.Candlestick), new Card((int)Card.RoomID.Lounge)},
+            new Card[3] {new Card((int)Card.SuspectID.MissScarlet), new Card((int)Card.WeaponID.Candlestick), new Card((int)Card.RoomID.Hall)},
+            new Card[3] {new Card((int)Card.SuspectID.MissScarlet), new Card((int)Card.WeaponID.Candlestick), new Card((int)Card.RoomID.Study)},
+            new Card[3] {new Card((int)Card.SuspectID.MissScarlet), new Card((int)Card.WeaponID.Knife), new Card((int)Card.RoomID.Kitchen)},
+            new Card[3] {new Card((int)Card.SuspectID.MissScarlet), new Card((int)Card.WeaponID.Knife), new Card((int)Card.RoomID.Ballroom)},
+            new Card[3] {new Card((int)Card.SuspectID.MissScarlet), new Card((int)Card.WeaponID.Knife), new Card((int)Card.RoomID.Conservatory)},
+            new Card[3] {new Card((int)Card.SuspectID.MissScarlet), new Card((int)Card.WeaponID.Knife), new Card((int)Card.RoomID.DiningRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.MissScarlet), new Card((int)Card.WeaponID.Knife), new Card((int)Card.RoomID.BilliardRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.MissScarlet), new Card((int)Card.WeaponID.Knife), new Card((int)Card.RoomID.Library)},
+            new Card[3] {new Card((int)Card.SuspectID.MissScarlet), new Card((int)Card.WeaponID.Knife), new Card((int)Card.RoomID.Lounge)},
+            new Card[3] {new Card((int)Card.SuspectID.MissScarlet), new Card((int)Card.WeaponID.Knife), new Card((int)Card.RoomID.Hall)},
+            new Card[3] {new Card((int)Card.SuspectID.MissScarlet), new Card((int)Card.WeaponID.Knife), new Card((int)Card.RoomID.Study)},
+            new Card[3] {new Card((int)Card.SuspectID.MissScarlet), new Card((int)Card.WeaponID.LeadPipe), new Card((int)Card.RoomID.Kitchen)},
+            new Card[3] {new Card((int)Card.SuspectID.MissScarlet), new Card((int)Card.WeaponID.LeadPipe), new Card((int)Card.RoomID.Ballroom)},
+            new Card[3] {new Card((int)Card.SuspectID.MissScarlet), new Card((int)Card.WeaponID.LeadPipe), new Card((int)Card.RoomID.Conservatory)},
+            new Card[3] {new Card((int)Card.SuspectID.MissScarlet), new Card((int)Card.WeaponID.LeadPipe), new Card((int)Card.RoomID.DiningRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.MissScarlet), new Card((int)Card.WeaponID.LeadPipe), new Card((int)Card.RoomID.BilliardRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.MissScarlet), new Card((int)Card.WeaponID.LeadPipe), new Card((int)Card.RoomID.Library)},
+            new Card[3] {new Card((int)Card.SuspectID.MissScarlet), new Card((int)Card.WeaponID.LeadPipe), new Card((int)Card.RoomID.Lounge)},
+            new Card[3] {new Card((int)Card.SuspectID.MissScarlet), new Card((int)Card.WeaponID.LeadPipe), new Card((int)Card.RoomID.Hall)},
+            new Card[3] {new Card((int)Card.SuspectID.MissScarlet), new Card((int)Card.WeaponID.LeadPipe), new Card((int)Card.RoomID.Study)},
+            new Card[3] {new Card((int)Card.SuspectID.MissScarlet), new Card((int)Card.WeaponID.Rope), new Card((int)Card.RoomID.Kitchen)},
+            new Card[3] {new Card((int)Card.SuspectID.MissScarlet), new Card((int)Card.WeaponID.Rope), new Card((int)Card.RoomID.Ballroom)},
+            new Card[3] {new Card((int)Card.SuspectID.MissScarlet), new Card((int)Card.WeaponID.Rope), new Card((int)Card.RoomID.Conservatory)},
+            new Card[3] {new Card((int)Card.SuspectID.MissScarlet), new Card((int)Card.WeaponID.Rope), new Card((int)Card.RoomID.DiningRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.MissScarlet), new Card((int)Card.WeaponID.Rope), new Card((int)Card.RoomID.BilliardRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.MissScarlet), new Card((int)Card.WeaponID.Rope), new Card((int)Card.RoomID.Library)},
+            new Card[3] {new Card((int)Card.SuspectID.MissScarlet), new Card((int)Card.WeaponID.Rope), new Card((int)Card.RoomID.Lounge)},
+            new Card[3] {new Card((int)Card.SuspectID.MissScarlet), new Card((int)Card.WeaponID.Rope), new Card((int)Card.RoomID.Hall)},
+            new Card[3] {new Card((int)Card.SuspectID.MissScarlet), new Card((int)Card.WeaponID.Rope), new Card((int)Card.RoomID.Study)},
+            new Card[3] {new Card((int)Card.SuspectID.MissScarlet), new Card((int)Card.WeaponID.Revolver), new Card((int)Card.RoomID.Kitchen)},
+            new Card[3] {new Card((int)Card.SuspectID.MissScarlet), new Card((int)Card.WeaponID.Revolver), new Card((int)Card.RoomID.Ballroom)},
+            new Card[3] {new Card((int)Card.SuspectID.MissScarlet), new Card((int)Card.WeaponID.Revolver), new Card((int)Card.RoomID.Conservatory)},
+            new Card[3] {new Card((int)Card.SuspectID.MissScarlet), new Card((int)Card.WeaponID.Revolver), new Card((int)Card.RoomID.DiningRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.MissScarlet), new Card((int)Card.WeaponID.Revolver), new Card((int)Card.RoomID.BilliardRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.MissScarlet), new Card((int)Card.WeaponID.Revolver), new Card((int)Card.RoomID.Library)},
+            new Card[3] {new Card((int)Card.SuspectID.MissScarlet), new Card((int)Card.WeaponID.Revolver), new Card((int)Card.RoomID.Lounge)},
+            new Card[3] {new Card((int)Card.SuspectID.MissScarlet), new Card((int)Card.WeaponID.Revolver), new Card((int)Card.RoomID.Hall)},
+            new Card[3] {new Card((int)Card.SuspectID.MissScarlet), new Card((int)Card.WeaponID.Revolver), new Card((int)Card.RoomID.Study)},
+            new Card[3] {new Card((int)Card.SuspectID.MissScarlet), new Card((int)Card.WeaponID.Wrench), new Card((int)Card.RoomID.Kitchen)},
+            new Card[3] {new Card((int)Card.SuspectID.MissScarlet), new Card((int)Card.WeaponID.Wrench), new Card((int)Card.RoomID.Ballroom)},
+            new Card[3] {new Card((int)Card.SuspectID.MissScarlet), new Card((int)Card.WeaponID.Wrench), new Card((int)Card.RoomID.Conservatory)},
+            new Card[3] {new Card((int)Card.SuspectID.MissScarlet), new Card((int)Card.WeaponID.Wrench), new Card((int)Card.RoomID.DiningRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.MissScarlet), new Card((int)Card.WeaponID.Wrench), new Card((int)Card.RoomID.BilliardRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.MissScarlet), new Card((int)Card.WeaponID.Wrench), new Card((int)Card.RoomID.Library)},
+            new Card[3] {new Card((int)Card.SuspectID.MissScarlet), new Card((int)Card.WeaponID.Wrench), new Card((int)Card.RoomID.Lounge)},
+            new Card[3] {new Card((int)Card.SuspectID.MissScarlet), new Card((int)Card.WeaponID.Wrench), new Card((int)Card.RoomID.Hall)},
+            new Card[3] {new Card((int)Card.SuspectID.MissScarlet), new Card((int)Card.WeaponID.Wrench), new Card((int)Card.RoomID.Study)},
+            new Card[3] {new Card((int)Card.SuspectID.ProfessorPlum), new Card((int)Card.WeaponID.Candlestick), new Card((int)Card.RoomID.Kitchen)},
+            new Card[3] {new Card((int)Card.SuspectID.ProfessorPlum), new Card((int)Card.WeaponID.Candlestick), new Card((int)Card.RoomID.Ballroom)},
+            new Card[3] {new Card((int)Card.SuspectID.ProfessorPlum), new Card((int)Card.WeaponID.Candlestick), new Card((int)Card.RoomID.Conservatory)},
+            new Card[3] {new Card((int)Card.SuspectID.ProfessorPlum), new Card((int)Card.WeaponID.Candlestick), new Card((int)Card.RoomID.DiningRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.ProfessorPlum), new Card((int)Card.WeaponID.Candlestick), new Card((int)Card.RoomID.BilliardRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.ProfessorPlum), new Card((int)Card.WeaponID.Candlestick), new Card((int)Card.RoomID.Library)},
+            new Card[3] {new Card((int)Card.SuspectID.ProfessorPlum), new Card((int)Card.WeaponID.Candlestick), new Card((int)Card.RoomID.Lounge)},
+            new Card[3] {new Card((int)Card.SuspectID.ProfessorPlum), new Card((int)Card.WeaponID.Candlestick), new Card((int)Card.RoomID.Hall)},
+            new Card[3] {new Card((int)Card.SuspectID.ProfessorPlum), new Card((int)Card.WeaponID.Candlestick), new Card((int)Card.RoomID.Study)},
+            new Card[3] {new Card((int)Card.SuspectID.ProfessorPlum), new Card((int)Card.WeaponID.Knife), new Card((int)Card.RoomID.Kitchen)},
+            new Card[3] {new Card((int)Card.SuspectID.ProfessorPlum), new Card((int)Card.WeaponID.Knife), new Card((int)Card.RoomID.Ballroom)},
+            new Card[3] {new Card((int)Card.SuspectID.ProfessorPlum), new Card((int)Card.WeaponID.Knife), new Card((int)Card.RoomID.Conservatory)},
+            new Card[3] {new Card((int)Card.SuspectID.ProfessorPlum), new Card((int)Card.WeaponID.Knife), new Card((int)Card.RoomID.DiningRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.ProfessorPlum), new Card((int)Card.WeaponID.Knife), new Card((int)Card.RoomID.BilliardRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.ProfessorPlum), new Card((int)Card.WeaponID.Knife), new Card((int)Card.RoomID.Library)},
+            new Card[3] {new Card((int)Card.SuspectID.ProfessorPlum), new Card((int)Card.WeaponID.Knife), new Card((int)Card.RoomID.Lounge)},
+            new Card[3] {new Card((int)Card.SuspectID.ProfessorPlum), new Card((int)Card.WeaponID.Knife), new Card((int)Card.RoomID.Hall)},
+            new Card[3] {new Card((int)Card.SuspectID.ProfessorPlum), new Card((int)Card.WeaponID.Knife), new Card((int)Card.RoomID.Study)},
+            new Card[3] {new Card((int)Card.SuspectID.ProfessorPlum), new Card((int)Card.WeaponID.LeadPipe), new Card((int)Card.RoomID.Kitchen)},
+            new Card[3] {new Card((int)Card.SuspectID.ProfessorPlum), new Card((int)Card.WeaponID.LeadPipe), new Card((int)Card.RoomID.Ballroom)},
+            new Card[3] {new Card((int)Card.SuspectID.ProfessorPlum), new Card((int)Card.WeaponID.LeadPipe), new Card((int)Card.RoomID.Conservatory)},
+            new Card[3] {new Card((int)Card.SuspectID.ProfessorPlum), new Card((int)Card.WeaponID.LeadPipe), new Card((int)Card.RoomID.DiningRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.ProfessorPlum), new Card((int)Card.WeaponID.LeadPipe), new Card((int)Card.RoomID.BilliardRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.ProfessorPlum), new Card((int)Card.WeaponID.LeadPipe), new Card((int)Card.RoomID.Library)},
+            new Card[3] {new Card((int)Card.SuspectID.ProfessorPlum), new Card((int)Card.WeaponID.LeadPipe), new Card((int)Card.RoomID.Lounge)},
+            new Card[3] {new Card((int)Card.SuspectID.ProfessorPlum), new Card((int)Card.WeaponID.LeadPipe), new Card((int)Card.RoomID.Hall)},
+            new Card[3] {new Card((int)Card.SuspectID.ProfessorPlum), new Card((int)Card.WeaponID.LeadPipe), new Card((int)Card.RoomID.Study)},
+            new Card[3] {new Card((int)Card.SuspectID.ProfessorPlum), new Card((int)Card.WeaponID.Rope), new Card((int)Card.RoomID.Kitchen)},
+            new Card[3] {new Card((int)Card.SuspectID.ProfessorPlum), new Card((int)Card.WeaponID.Rope), new Card((int)Card.RoomID.Ballroom)},
+            new Card[3] {new Card((int)Card.SuspectID.ProfessorPlum), new Card((int)Card.WeaponID.Rope), new Card((int)Card.RoomID.Conservatory)},
+            new Card[3] {new Card((int)Card.SuspectID.ProfessorPlum), new Card((int)Card.WeaponID.Rope), new Card((int)Card.RoomID.DiningRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.ProfessorPlum), new Card((int)Card.WeaponID.Rope), new Card((int)Card.RoomID.BilliardRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.ProfessorPlum), new Card((int)Card.WeaponID.Rope), new Card((int)Card.RoomID.Library)},
+            new Card[3] {new Card((int)Card.SuspectID.ProfessorPlum), new Card((int)Card.WeaponID.Rope), new Card((int)Card.RoomID.Lounge)},
+            new Card[3] {new Card((int)Card.SuspectID.ProfessorPlum), new Card((int)Card.WeaponID.Rope), new Card((int)Card.RoomID.Hall)},
+            new Card[3] {new Card((int)Card.SuspectID.ProfessorPlum), new Card((int)Card.WeaponID.Rope), new Card((int)Card.RoomID.Study)},
+            new Card[3] {new Card((int)Card.SuspectID.ProfessorPlum), new Card((int)Card.WeaponID.Revolver), new Card((int)Card.RoomID.Kitchen)},
+            new Card[3] {new Card((int)Card.SuspectID.ProfessorPlum), new Card((int)Card.WeaponID.Revolver), new Card((int)Card.RoomID.Ballroom)},
+            new Card[3] {new Card((int)Card.SuspectID.ProfessorPlum), new Card((int)Card.WeaponID.Revolver), new Card((int)Card.RoomID.Conservatory)},
+            new Card[3] {new Card((int)Card.SuspectID.ProfessorPlum), new Card((int)Card.WeaponID.Revolver), new Card((int)Card.RoomID.DiningRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.ProfessorPlum), new Card((int)Card.WeaponID.Revolver), new Card((int)Card.RoomID.BilliardRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.ProfessorPlum), new Card((int)Card.WeaponID.Revolver), new Card((int)Card.RoomID.Library)},
+            new Card[3] {new Card((int)Card.SuspectID.ProfessorPlum), new Card((int)Card.WeaponID.Revolver), new Card((int)Card.RoomID.Lounge)},
+            new Card[3] {new Card((int)Card.SuspectID.ProfessorPlum), new Card((int)Card.WeaponID.Revolver), new Card((int)Card.RoomID.Hall)},
+            new Card[3] {new Card((int)Card.SuspectID.ProfessorPlum), new Card((int)Card.WeaponID.Revolver), new Card((int)Card.RoomID.Study)},
+            new Card[3] {new Card((int)Card.SuspectID.ProfessorPlum), new Card((int)Card.WeaponID.Wrench), new Card((int)Card.RoomID.Kitchen)},
+            new Card[3] {new Card((int)Card.SuspectID.ProfessorPlum), new Card((int)Card.WeaponID.Wrench), new Card((int)Card.RoomID.Ballroom)},
+            new Card[3] {new Card((int)Card.SuspectID.ProfessorPlum), new Card((int)Card.WeaponID.Wrench), new Card((int)Card.RoomID.Conservatory)},
+            new Card[3] {new Card((int)Card.SuspectID.ProfessorPlum), new Card((int)Card.WeaponID.Wrench), new Card((int)Card.RoomID.DiningRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.ProfessorPlum), new Card((int)Card.WeaponID.Wrench), new Card((int)Card.RoomID.BilliardRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.ProfessorPlum), new Card((int)Card.WeaponID.Wrench), new Card((int)Card.RoomID.Library)},
+            new Card[3] {new Card((int)Card.SuspectID.ProfessorPlum), new Card((int)Card.WeaponID.Wrench), new Card((int)Card.RoomID.Lounge)},
+            new Card[3] {new Card((int)Card.SuspectID.ProfessorPlum), new Card((int)Card.WeaponID.Wrench), new Card((int)Card.RoomID.Hall)},
+            new Card[3] {new Card((int)Card.SuspectID.ProfessorPlum), new Card((int)Card.WeaponID.Wrench), new Card((int)Card.RoomID.Study)},
+            new Card[3] {new Card((int)Card.SuspectID.MrGreen), new Card((int)Card.WeaponID.Candlestick), new Card((int)Card.RoomID.Kitchen)},
+            new Card[3] {new Card((int)Card.SuspectID.MrGreen), new Card((int)Card.WeaponID.Candlestick), new Card((int)Card.RoomID.Ballroom)},
+            new Card[3] {new Card((int)Card.SuspectID.MrGreen), new Card((int)Card.WeaponID.Candlestick), new Card((int)Card.RoomID.Conservatory)},
+            new Card[3] {new Card((int)Card.SuspectID.MrGreen), new Card((int)Card.WeaponID.Candlestick), new Card((int)Card.RoomID.DiningRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.MrGreen), new Card((int)Card.WeaponID.Candlestick), new Card((int)Card.RoomID.BilliardRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.MrGreen), new Card((int)Card.WeaponID.Candlestick), new Card((int)Card.RoomID.Library)},
+            new Card[3] {new Card((int)Card.SuspectID.MrGreen), new Card((int)Card.WeaponID.Candlestick), new Card((int)Card.RoomID.Lounge)},
+            new Card[3] {new Card((int)Card.SuspectID.MrGreen), new Card((int)Card.WeaponID.Candlestick), new Card((int)Card.RoomID.Hall)},
+            new Card[3] {new Card((int)Card.SuspectID.MrGreen), new Card((int)Card.WeaponID.Candlestick), new Card((int)Card.RoomID.Study)},
+            new Card[3] {new Card((int)Card.SuspectID.MrGreen), new Card((int)Card.WeaponID.Knife), new Card((int)Card.RoomID.Kitchen)},
+            new Card[3] {new Card((int)Card.SuspectID.MrGreen), new Card((int)Card.WeaponID.Knife), new Card((int)Card.RoomID.Ballroom)},
+            new Card[3] {new Card((int)Card.SuspectID.MrGreen), new Card((int)Card.WeaponID.Knife), new Card((int)Card.RoomID.Conservatory)},
+            new Card[3] {new Card((int)Card.SuspectID.MrGreen), new Card((int)Card.WeaponID.Knife), new Card((int)Card.RoomID.DiningRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.MrGreen), new Card((int)Card.WeaponID.Knife), new Card((int)Card.RoomID.BilliardRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.MrGreen), new Card((int)Card.WeaponID.Knife), new Card((int)Card.RoomID.Library)},
+            new Card[3] {new Card((int)Card.SuspectID.MrGreen), new Card((int)Card.WeaponID.Knife), new Card((int)Card.RoomID.Lounge)},
+            new Card[3] {new Card((int)Card.SuspectID.MrGreen), new Card((int)Card.WeaponID.Knife), new Card((int)Card.RoomID.Hall)},
+            new Card[3] {new Card((int)Card.SuspectID.MrGreen), new Card((int)Card.WeaponID.Knife), new Card((int)Card.RoomID.Study)},
+            new Card[3] {new Card((int)Card.SuspectID.MrGreen), new Card((int)Card.WeaponID.LeadPipe), new Card((int)Card.RoomID.Kitchen)},
+            new Card[3] {new Card((int)Card.SuspectID.MrGreen), new Card((int)Card.WeaponID.LeadPipe), new Card((int)Card.RoomID.Ballroom)},
+            new Card[3] {new Card((int)Card.SuspectID.MrGreen), new Card((int)Card.WeaponID.LeadPipe), new Card((int)Card.RoomID.Conservatory)},
+            new Card[3] {new Card((int)Card.SuspectID.MrGreen), new Card((int)Card.WeaponID.LeadPipe), new Card((int)Card.RoomID.DiningRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.MrGreen), new Card((int)Card.WeaponID.LeadPipe), new Card((int)Card.RoomID.BilliardRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.MrGreen), new Card((int)Card.WeaponID.LeadPipe), new Card((int)Card.RoomID.Library)},
+            new Card[3] {new Card((int)Card.SuspectID.MrGreen), new Card((int)Card.WeaponID.LeadPipe), new Card((int)Card.RoomID.Lounge)},
+            new Card[3] {new Card((int)Card.SuspectID.MrGreen), new Card((int)Card.WeaponID.LeadPipe), new Card((int)Card.RoomID.Hall)},
+            new Card[3] {new Card((int)Card.SuspectID.MrGreen), new Card((int)Card.WeaponID.LeadPipe), new Card((int)Card.RoomID.Study)},
+            new Card[3] {new Card((int)Card.SuspectID.MrGreen), new Card((int)Card.WeaponID.Rope), new Card((int)Card.RoomID.Kitchen)},
+            new Card[3] {new Card((int)Card.SuspectID.MrGreen), new Card((int)Card.WeaponID.Rope), new Card((int)Card.RoomID.Ballroom)},
+            new Card[3] {new Card((int)Card.SuspectID.MrGreen), new Card((int)Card.WeaponID.Rope), new Card((int)Card.RoomID.Conservatory)},
+            new Card[3] {new Card((int)Card.SuspectID.MrGreen), new Card((int)Card.WeaponID.Rope), new Card((int)Card.RoomID.DiningRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.MrGreen), new Card((int)Card.WeaponID.Rope), new Card((int)Card.RoomID.BilliardRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.MrGreen), new Card((int)Card.WeaponID.Rope), new Card((int)Card.RoomID.Library)},
+            new Card[3] {new Card((int)Card.SuspectID.MrGreen), new Card((int)Card.WeaponID.Rope), new Card((int)Card.RoomID.Lounge)},
+            new Card[3] {new Card((int)Card.SuspectID.MrGreen), new Card((int)Card.WeaponID.Rope), new Card((int)Card.RoomID.Hall)},
+            new Card[3] {new Card((int)Card.SuspectID.MrGreen), new Card((int)Card.WeaponID.Rope), new Card((int)Card.RoomID.Study)},
+            new Card[3] {new Card((int)Card.SuspectID.MrGreen), new Card((int)Card.WeaponID.Revolver), new Card((int)Card.RoomID.Kitchen)},
+            new Card[3] {new Card((int)Card.SuspectID.MrGreen), new Card((int)Card.WeaponID.Revolver), new Card((int)Card.RoomID.Ballroom)},
+            new Card[3] {new Card((int)Card.SuspectID.MrGreen), new Card((int)Card.WeaponID.Revolver), new Card((int)Card.RoomID.Conservatory)},
+            new Card[3] {new Card((int)Card.SuspectID.MrGreen), new Card((int)Card.WeaponID.Revolver), new Card((int)Card.RoomID.DiningRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.MrGreen), new Card((int)Card.WeaponID.Revolver), new Card((int)Card.RoomID.BilliardRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.MrGreen), new Card((int)Card.WeaponID.Revolver), new Card((int)Card.RoomID.Library)},
+            new Card[3] {new Card((int)Card.SuspectID.MrGreen), new Card((int)Card.WeaponID.Revolver), new Card((int)Card.RoomID.Lounge)},
+            new Card[3] {new Card((int)Card.SuspectID.MrGreen), new Card((int)Card.WeaponID.Revolver), new Card((int)Card.RoomID.Hall)},
+            new Card[3] {new Card((int)Card.SuspectID.MrGreen), new Card((int)Card.WeaponID.Revolver), new Card((int)Card.RoomID.Study)},
+            new Card[3] {new Card((int)Card.SuspectID.MrGreen), new Card((int)Card.WeaponID.Wrench), new Card((int)Card.RoomID.Kitchen)},
+            new Card[3] {new Card((int)Card.SuspectID.MrGreen), new Card((int)Card.WeaponID.Wrench), new Card((int)Card.RoomID.Ballroom)},
+            new Card[3] {new Card((int)Card.SuspectID.MrGreen), new Card((int)Card.WeaponID.Wrench), new Card((int)Card.RoomID.Conservatory)},
+            new Card[3] {new Card((int)Card.SuspectID.MrGreen), new Card((int)Card.WeaponID.Wrench), new Card((int)Card.RoomID.DiningRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.MrGreen), new Card((int)Card.WeaponID.Wrench), new Card((int)Card.RoomID.BilliardRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.MrGreen), new Card((int)Card.WeaponID.Wrench), new Card((int)Card.RoomID.Library)},
+            new Card[3] {new Card((int)Card.SuspectID.MrGreen), new Card((int)Card.WeaponID.Wrench), new Card((int)Card.RoomID.Lounge)},
+            new Card[3] {new Card((int)Card.SuspectID.MrGreen), new Card((int)Card.WeaponID.Wrench), new Card((int)Card.RoomID.Hall)},
+            new Card[3] {new Card((int)Card.SuspectID.MrGreen), new Card((int)Card.WeaponID.Wrench), new Card((int)Card.RoomID.Study)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsWhite), new Card((int)Card.WeaponID.Candlestick), new Card((int)Card.RoomID.Kitchen)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsWhite), new Card((int)Card.WeaponID.Candlestick), new Card((int)Card.RoomID.Ballroom)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsWhite), new Card((int)Card.WeaponID.Candlestick), new Card((int)Card.RoomID.Conservatory)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsWhite), new Card((int)Card.WeaponID.Candlestick), new Card((int)Card.RoomID.DiningRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsWhite), new Card((int)Card.WeaponID.Candlestick), new Card((int)Card.RoomID.BilliardRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsWhite), new Card((int)Card.WeaponID.Candlestick), new Card((int)Card.RoomID.Library)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsWhite), new Card((int)Card.WeaponID.Candlestick), new Card((int)Card.RoomID.Lounge)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsWhite), new Card((int)Card.WeaponID.Candlestick), new Card((int)Card.RoomID.Hall)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsWhite), new Card((int)Card.WeaponID.Candlestick), new Card((int)Card.RoomID.Study)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsWhite), new Card((int)Card.WeaponID.Knife), new Card((int)Card.RoomID.Kitchen)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsWhite), new Card((int)Card.WeaponID.Knife), new Card((int)Card.RoomID.Ballroom)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsWhite), new Card((int)Card.WeaponID.Knife), new Card((int)Card.RoomID.Conservatory)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsWhite), new Card((int)Card.WeaponID.Knife), new Card((int)Card.RoomID.DiningRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsWhite), new Card((int)Card.WeaponID.Knife), new Card((int)Card.RoomID.BilliardRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsWhite), new Card((int)Card.WeaponID.Knife), new Card((int)Card.RoomID.Library)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsWhite), new Card((int)Card.WeaponID.Knife), new Card((int)Card.RoomID.Lounge)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsWhite), new Card((int)Card.WeaponID.Knife), new Card((int)Card.RoomID.Hall)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsWhite), new Card((int)Card.WeaponID.Knife), new Card((int)Card.RoomID.Study)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsWhite), new Card((int)Card.WeaponID.LeadPipe), new Card((int)Card.RoomID.Kitchen)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsWhite), new Card((int)Card.WeaponID.LeadPipe), new Card((int)Card.RoomID.Ballroom)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsWhite), new Card((int)Card.WeaponID.LeadPipe), new Card((int)Card.RoomID.Conservatory)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsWhite), new Card((int)Card.WeaponID.LeadPipe), new Card((int)Card.RoomID.DiningRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsWhite), new Card((int)Card.WeaponID.LeadPipe), new Card((int)Card.RoomID.BilliardRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsWhite), new Card((int)Card.WeaponID.LeadPipe), new Card((int)Card.RoomID.Library)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsWhite), new Card((int)Card.WeaponID.LeadPipe), new Card((int)Card.RoomID.Lounge)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsWhite), new Card((int)Card.WeaponID.LeadPipe), new Card((int)Card.RoomID.Hall)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsWhite), new Card((int)Card.WeaponID.LeadPipe), new Card((int)Card.RoomID.Study)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsWhite), new Card((int)Card.WeaponID.Rope), new Card((int)Card.RoomID.Kitchen)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsWhite), new Card((int)Card.WeaponID.Rope), new Card((int)Card.RoomID.Ballroom)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsWhite), new Card((int)Card.WeaponID.Rope), new Card((int)Card.RoomID.Conservatory)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsWhite), new Card((int)Card.WeaponID.Rope), new Card((int)Card.RoomID.DiningRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsWhite), new Card((int)Card.WeaponID.Rope), new Card((int)Card.RoomID.BilliardRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsWhite), new Card((int)Card.WeaponID.Rope), new Card((int)Card.RoomID.Library)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsWhite), new Card((int)Card.WeaponID.Rope), new Card((int)Card.RoomID.Lounge)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsWhite), new Card((int)Card.WeaponID.Rope), new Card((int)Card.RoomID.Hall)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsWhite), new Card((int)Card.WeaponID.Rope), new Card((int)Card.RoomID.Study)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsWhite), new Card((int)Card.WeaponID.Revolver), new Card((int)Card.RoomID.Kitchen)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsWhite), new Card((int)Card.WeaponID.Revolver), new Card((int)Card.RoomID.Ballroom)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsWhite), new Card((int)Card.WeaponID.Revolver), new Card((int)Card.RoomID.Conservatory)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsWhite), new Card((int)Card.WeaponID.Revolver), new Card((int)Card.RoomID.DiningRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsWhite), new Card((int)Card.WeaponID.Revolver), new Card((int)Card.RoomID.BilliardRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsWhite), new Card((int)Card.WeaponID.Revolver), new Card((int)Card.RoomID.Library)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsWhite), new Card((int)Card.WeaponID.Revolver), new Card((int)Card.RoomID.Lounge)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsWhite), new Card((int)Card.WeaponID.Revolver), new Card((int)Card.RoomID.Hall)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsWhite), new Card((int)Card.WeaponID.Revolver), new Card((int)Card.RoomID.Study)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsWhite), new Card((int)Card.WeaponID.Wrench), new Card((int)Card.RoomID.Kitchen)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsWhite), new Card((int)Card.WeaponID.Wrench), new Card((int)Card.RoomID.Ballroom)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsWhite), new Card((int)Card.WeaponID.Wrench), new Card((int)Card.RoomID.Conservatory)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsWhite), new Card((int)Card.WeaponID.Wrench), new Card((int)Card.RoomID.DiningRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsWhite), new Card((int)Card.WeaponID.Wrench), new Card((int)Card.RoomID.BilliardRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsWhite), new Card((int)Card.WeaponID.Wrench), new Card((int)Card.RoomID.Library)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsWhite), new Card((int)Card.WeaponID.Wrench), new Card((int)Card.RoomID.Lounge)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsWhite), new Card((int)Card.WeaponID.Wrench), new Card((int)Card.RoomID.Hall)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsWhite), new Card((int)Card.WeaponID.Wrench), new Card((int)Card.RoomID.Study)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsPeacock), new Card((int)Card.WeaponID.Candlestick), new Card((int)Card.RoomID.Kitchen)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsPeacock), new Card((int)Card.WeaponID.Candlestick), new Card((int)Card.RoomID.Ballroom)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsPeacock), new Card((int)Card.WeaponID.Candlestick), new Card((int)Card.RoomID.Conservatory)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsPeacock), new Card((int)Card.WeaponID.Candlestick), new Card((int)Card.RoomID.DiningRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsPeacock), new Card((int)Card.WeaponID.Candlestick), new Card((int)Card.RoomID.BilliardRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsPeacock), new Card((int)Card.WeaponID.Candlestick), new Card((int)Card.RoomID.Library)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsPeacock), new Card((int)Card.WeaponID.Candlestick), new Card((int)Card.RoomID.Lounge)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsPeacock), new Card((int)Card.WeaponID.Candlestick), new Card((int)Card.RoomID.Hall)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsPeacock), new Card((int)Card.WeaponID.Candlestick), new Card((int)Card.RoomID.Study)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsPeacock), new Card((int)Card.WeaponID.Knife), new Card((int)Card.RoomID.Kitchen)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsPeacock), new Card((int)Card.WeaponID.Knife), new Card((int)Card.RoomID.Ballroom)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsPeacock), new Card((int)Card.WeaponID.Knife), new Card((int)Card.RoomID.Conservatory)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsPeacock), new Card((int)Card.WeaponID.Knife), new Card((int)Card.RoomID.DiningRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsPeacock), new Card((int)Card.WeaponID.Knife), new Card((int)Card.RoomID.BilliardRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsPeacock), new Card((int)Card.WeaponID.Knife), new Card((int)Card.RoomID.Library)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsPeacock), new Card((int)Card.WeaponID.Knife), new Card((int)Card.RoomID.Lounge)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsPeacock), new Card((int)Card.WeaponID.Knife), new Card((int)Card.RoomID.Hall)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsPeacock), new Card((int)Card.WeaponID.Knife), new Card((int)Card.RoomID.Study)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsPeacock), new Card((int)Card.WeaponID.LeadPipe), new Card((int)Card.RoomID.Kitchen)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsPeacock), new Card((int)Card.WeaponID.LeadPipe), new Card((int)Card.RoomID.Ballroom)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsPeacock), new Card((int)Card.WeaponID.LeadPipe), new Card((int)Card.RoomID.Conservatory)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsPeacock), new Card((int)Card.WeaponID.LeadPipe), new Card((int)Card.RoomID.DiningRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsPeacock), new Card((int)Card.WeaponID.LeadPipe), new Card((int)Card.RoomID.BilliardRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsPeacock), new Card((int)Card.WeaponID.LeadPipe), new Card((int)Card.RoomID.Library)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsPeacock), new Card((int)Card.WeaponID.LeadPipe), new Card((int)Card.RoomID.Lounge)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsPeacock), new Card((int)Card.WeaponID.LeadPipe), new Card((int)Card.RoomID.Hall)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsPeacock), new Card((int)Card.WeaponID.LeadPipe), new Card((int)Card.RoomID.Study)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsPeacock), new Card((int)Card.WeaponID.Rope), new Card((int)Card.RoomID.Kitchen)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsPeacock), new Card((int)Card.WeaponID.Rope), new Card((int)Card.RoomID.Ballroom)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsPeacock), new Card((int)Card.WeaponID.Rope), new Card((int)Card.RoomID.Conservatory)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsPeacock), new Card((int)Card.WeaponID.Rope), new Card((int)Card.RoomID.DiningRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsPeacock), new Card((int)Card.WeaponID.Rope), new Card((int)Card.RoomID.BilliardRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsPeacock), new Card((int)Card.WeaponID.Rope), new Card((int)Card.RoomID.Library)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsPeacock), new Card((int)Card.WeaponID.Rope), new Card((int)Card.RoomID.Lounge)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsPeacock), new Card((int)Card.WeaponID.Rope), new Card((int)Card.RoomID.Hall)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsPeacock), new Card((int)Card.WeaponID.Rope), new Card((int)Card.RoomID.Study)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsPeacock), new Card((int)Card.WeaponID.Revolver), new Card((int)Card.RoomID.Kitchen)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsPeacock), new Card((int)Card.WeaponID.Revolver), new Card((int)Card.RoomID.Ballroom)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsPeacock), new Card((int)Card.WeaponID.Revolver), new Card((int)Card.RoomID.Conservatory)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsPeacock), new Card((int)Card.WeaponID.Revolver), new Card((int)Card.RoomID.DiningRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsPeacock), new Card((int)Card.WeaponID.Revolver), new Card((int)Card.RoomID.BilliardRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsPeacock), new Card((int)Card.WeaponID.Revolver), new Card((int)Card.RoomID.Library)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsPeacock), new Card((int)Card.WeaponID.Revolver), new Card((int)Card.RoomID.Lounge)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsPeacock), new Card((int)Card.WeaponID.Revolver), new Card((int)Card.RoomID.Hall)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsPeacock), new Card((int)Card.WeaponID.Revolver), new Card((int)Card.RoomID.Study)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsPeacock), new Card((int)Card.WeaponID.Wrench), new Card((int)Card.RoomID.Kitchen)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsPeacock), new Card((int)Card.WeaponID.Wrench), new Card((int)Card.RoomID.Ballroom)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsPeacock), new Card((int)Card.WeaponID.Wrench), new Card((int)Card.RoomID.Conservatory)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsPeacock), new Card((int)Card.WeaponID.Wrench), new Card((int)Card.RoomID.DiningRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsPeacock), new Card((int)Card.WeaponID.Wrench), new Card((int)Card.RoomID.BilliardRoom)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsPeacock), new Card((int)Card.WeaponID.Wrench), new Card((int)Card.RoomID.Library)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsPeacock), new Card((int)Card.WeaponID.Wrench), new Card((int)Card.RoomID.Lounge)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsPeacock), new Card((int)Card.WeaponID.Wrench), new Card((int)Card.RoomID.Hall)},
+            new Card[3] {new Card((int)Card.SuspectID.MrsPeacock), new Card((int)Card.WeaponID.Wrench), new Card((int)Card.RoomID.Study)},
+
+        };
+
+        public List<List<Card>> PlayerCards { get; set; }
+
+        //private void GenerateAllPossible()
+        //{
+        //    List<Card[]> possibles = new List<Card[]>();
+
+        //    for(int player = (int)Card.SuspectID.MinSuspectID; player <= (int)Card.SuspectID.MaxSuspectID; player++)
+        //    {
+        //        for (int weapon = (int)Card.WeaponID.MinWeaponID ; weapon <= (int)Card.WeaponID.MaxWeaponID; weapon++)
+        //        {
+        //            for(int room = (int)Card.RoomID.MinRoomID; room <= (int)Card.RoomID.MaxRoomID; room++)
+        //            {
+        //                Card[] trio = new Card[3];
+        //                trio[0] = new Card(player);
+        //                trio[1] = new Card(weapon);
+        //                trio[2] = new Card(room);
+        //                possibles.Add(trio);
+        //                //ShowComboCards(trio);
+        //                System.Diagnostics.Debug.WriteLine(
+        //                    "new Card[3] {" +
+        //                    "new Card((int)Card.SuspectID." + trio[0].ToString() + "), " +
+        //                    "new Card((int)Card.WeaponID." + trio[1].ToString() + "), " +
+        //                    "new Card((int)Card.RoomID." + trio[2].ToString() + ")" +
+        //                    "},"
+        //                    );
+
+        //            }
+        //        }
+        //    }
+        //    System.Diagnostics.Debug.WriteLine(possibles.Count);
+        //}
+
+        private void DistributeCards(Random rnd)
+        {
+            List<Card> remaining = new List<Card>();
+
+            for (int suspect = (int)Card.SuspectID.MinSuspectID; suspect <= (int)Card.SuspectID.MaxSuspectID; suspect++)
+            {
+                if(suspect == hiddenCards[0].Id || suspect == hiddenCards[1].Id || suspect == hiddenCards[2].Id)
+                {
+                    continue;
+                }
+                remaining.Add(new Card(suspect));
+
+            }
+            for (int weapon = (int)Card.WeaponID.MinWeaponID; weapon <= (int)Card.WeaponID.MaxWeaponID; weapon++)
+            {
+                if (weapon == hiddenCards[0].Id || weapon == hiddenCards[1].Id || weapon == hiddenCards[2].Id)
+                {
+                    continue;
+                }
+                remaining.Add(new Card(weapon));
+            }
+            for (int room = (int)Card.RoomID.MinRoomID; room <= (int)Card.RoomID.MaxRoomID; room++)
+            {
+                if (room == hiddenCards[0].Id || room == hiddenCards[1].Id || room == hiddenCards[2].Id)
+                {
+                    continue;
+                }
+                remaining.Add(new Card(room));
+            }
+            //
+            PlayerCards = new List<List<Card>>();
+            int player;
+            for (player = 0; player < Players.NumPlayers; player++)
+            {
+                PlayerCards.Add(new List<Card>());
+            }
+
+            player = 0;
+            while (remaining.Count > 0)
+            {
+                int idx = rnd.Next(remaining.Count);
+                Card card = remaining[idx];
+                PlayerCards[player].Add(card);
+                player = (player + 1) % Players.NumPlayers;
+                //System.Diagnostics.Debug.WriteLine(card);
+                remaining.RemoveAt(idx);
+            }
+
+        }
+
+        public bool Accuse(Card[] trio)
+        {
+            if (trio[0].Id != hiddenCards[0].Id && trio[0].Id != hiddenCards[1].Id && trio[0].Id != hiddenCards[2].Id)
+            {
+                return false;
+            }
+            if (trio[1].Id != hiddenCards[0].Id && trio[1].Id != hiddenCards[1].Id && trio[1].Id != hiddenCards[2].Id)
+            {
+                return false;
+            }
+            if (trio[2].Id != hiddenCards[0].Id && trio[2].Id != hiddenCards[1].Id && trio[2].Id != hiddenCards[2].Id)
+            {
+                return false;
+            }
+            return true;
+        }
+
+
+        public Card MatchOneCardOfPlayer(List<Card> list, Card[] trio)
+        {
+            foreach(Card card in list)
+            {
+                if(card.Id == trio[0].Id || card.Id == trio[1].Id || card.Id == trio[2].Id)
+                {
+                    return card;
+                }
+            }
+            return null;
+        }
+        public Card Suggest(int player, Card[] trio)
+        {
+            return MatchOneCardOfPlayer(PlayerCards[player], trio);
+        }
+
+
+        public Game()
+        {
+            Random rnd = new Random();
+
+            //set number of players
+            Players = new Players(new string[] { "Allan", "Barney", "Carrol", "Daine", "Erica", "Frank", "Gregg"});
+            //hide 3 
+            hiddenCards = RandomSelectHidden(rnd);
+            ShowHiddenCards();
+            System.Diagnostics.Debug.WriteLine("-----------------------------------");
+            //GenerateAllPossible();
+
+            DistributeCards(rnd);
+            ShowPlayerCards();
+            System.Diagnostics.Debug.WriteLine("-----------------------------------");
+            foreach (Card[] trio in possibles)
+            {
+                if(Accuse(trio) == true)
+                {
+                    //ShowCards("SUCCESS", trio);
+                }
+                else
+                {
+                    for (int player = 0; player < Players.NumPlayers; player++)
+                    {
+                        Card result = Suggest(player, trio);
+
+                        if (result == null)
+                        {
+                            //System.Diagnostics.Debug.WriteLine("Suggest : " + trio[0] + ", " + trio[1] + ", " + trio[2] + " -> " + Players.Names[player] + " = none");
+                        }
+                        else
+                        {
+                            System.Diagnostics.Debug.WriteLine("Suggest : " + trio[0] + ", " + trio[1] + ", " + trio[2] + " -> " + Players.Names[player] + " = " + result.ToString());
+                        }
+                    }
+                }
+            }
+        }
+
+
+        private void ShowPlayerCards()
+        {
+            StringBuilder sb = new StringBuilder();
+            for(int player = 0; player < Players.NumPlayers; player++)
+            {
+                sb.Append(Players.Names[player]);
+                sb.Append(" : ");
+                foreach (Card card in PlayerCards[player])
+                {
+                    sb.Append(card + ", ");
+                }
+                sb.AppendLine("");
+            }
+            System.Diagnostics.Debug.WriteLine(sb.ToString());     
+
+        }
+
+        private void ShowHiddenCards()
+        {
+            //System.Diagnostics.Debug.WriteLine("Hidden : " + hiddenCards[0] + ", " + hiddenCards[1] + ", " + hiddenCards[2] + ".");
+            ShowCards("Hidden", hiddenCards);
+        }
+
+        private void ShowComboCards(Card[] cards)
+        {
+            //System.Diagnostics.Debug.WriteLine("Combo : " + cards[0] + ", " + cards[1] + ", " + cards[2] + ".");
+            ShowCards("Combo", cards);
+        }
+
+        private void ShowCards(string label, Card[] cards)
+        {
+            System.Diagnostics.Debug.WriteLine(label + " : " + cards[0] + ", " + cards[1] + ", " + cards[2] + ".");
+        }
+
+        private Card[] RandomSelectHidden(Random rnd)
+        {
+
+            Card[] hiddenCards = new Card[3];
+            hiddenCards[0] = Card.GetRandomSuspect(rnd);
+            hiddenCards[1] = Card.GetRandomWeapon(rnd);
+            hiddenCards[2] = Card.GetRandomRoom(rnd);
+
+            return hiddenCards;
+        }
+    }
+}
